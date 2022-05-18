@@ -7,8 +7,12 @@ import streamlit as st
 # Title
 # -----------------------------------------------------------------------------------------------------------------------
 st.markdown('''## __Deep Learning for Image Recognition on Google Colab - Code Generator__ 🥳''')
-st.markdown("""##### You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?""")
-st.markdown('''##### Let me do it for you! 🤓''')
+
+st.info("""
+    You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?\\
+    **Let me do it for you!** 🤓""")
+#st.markdown("""#### You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?""")
+#st.markdown('''#### Let me do it for you! 🤓''')
 st.markdown('''Follow the instructions in the "getting started" section to create the working environment. 
     Select on the sidebar the neural network parameters that inspire you most (or choose the recommended ones). 
     Copy, paste and run the code generated below on this page on a google colab notebook and .. you're done!''')
