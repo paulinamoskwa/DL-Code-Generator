@@ -13,14 +13,15 @@ if st.button('Hello 👋'):
     div = Div(text=html)
     st.bokeh_chart(div)
 
-st.markdown('# Deep Learning for Image Recognition on Google Colab - Code Generator 🥳')
-st.markdown("""##### You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?""")
-st.markdown('''##### Let me do it for you! 🤓''')
+st.markdown('# Image Recognition - Code Generator')
+st.markdown('#### Deep Learning for Image Recognition on ✨Google Colab✨')
+st.markdown("""###### You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?""")
+st.markdown('''###### Let me do it for you! 🤓''')
 st.markdown('''Follow the instructions in the "getting started" section to create the working environment. 
     Select on the sidebar the neural network parameters that inspire you most (or choose the recommended ones). 
     Copy, paste and run the code generated below on this page on a google colab notebook and .. you're done!''')
 
-st.image("https://miro.medium.com/max/1400/1*rAbCk0T4rksShBcPQjWC0A.gif", use_column_width=True) # width=500)
+st.image("https://miro.medium.com/max/1400/1*rAbCk0T4rksShBcPQjWC0A.gif", use_column_width=True)
 
 ###-----------------------------------------------------------------------------------------
 ### Getting Started
