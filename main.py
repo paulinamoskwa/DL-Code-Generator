@@ -8,7 +8,7 @@ from bokeh.models.widgets import Div
 ### Title
 ###-----------------------------------------------------------------------------------------
 if st.button('Hello 👋'):
-    js = "window.open('https://paulinomoskwa.github.io/Hello/')"  # New tab or window
+    js = "window.location.href = 'https://paulinomoskwa.github.io/Hello/'"  # Current tab
     html = '<img src onerror="{}">'.format(js)
     div = Div(text=html)
     st.bokeh_chart(div)
