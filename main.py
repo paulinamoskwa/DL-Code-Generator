@@ -1,12 +1,19 @@
-# -----------------------------------------------------------------------------------------------------------------------
-# Libraries
-# -----------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------
+### Libraries
+###-----------------------------------------------------------------------------------------
 import streamlit as st
+from bokeh.models.widgets import Div
 
-# -----------------------------------------------------------------------------------------------------------------------
-# Title
-# -----------------------------------------------------------------------------------------------------------------------
-st.markdown('''## __Deep Learning for Image Recognition on Google Colab - Code Generator__ 🥳''')
+###-----------------------------------------------------------------------------------------
+### Title
+###-----------------------------------------------------------------------------------------
+if st.button('Hello 👋'):
+    js = "window.open('https://paulinomoskwa.github.io/Hello/')"  # New tab or window
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+
+st.markdown('# Deep Learning for Image Recognition on Google Colab - Code Generator 🥳')
 st.markdown("""##### You want to build an artificial neural network to automatically classify images, but you don't feel like *bothering with the code*?""")
 st.markdown('''##### Let me do it for you! 🤓''')
 st.markdown('''Follow the instructions in the "getting started" section to create the working environment. 
@@ -15,9 +22,9 @@ st.markdown('''Follow the instructions in the "getting started" section to creat
 
 st.image("https://miro.medium.com/max/1400/1*rAbCk0T4rksShBcPQjWC0A.gif", use_column_width=True) # width=500)
 
-# -----------------------------------------------------------------------------------------------------------------------
-# Getting Started
-# -----------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------
+### Getting Started
+###-----------------------------------------------------------------------------------------
 st.markdown("### Getting started")
 st.markdown(''' 
     - Make a Google account and log in to the drive.
@@ -69,78 +76,79 @@ st.markdown('''
     - Wait eons for the training to finish.. and you're done! Now you have your classifier!
 ''')
 
+###-----------------------------------------------------------------------------------------
+### Sidebar Parameters
+###-----------------------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------------------------------------------------
-# Sidebar Parameters
-# -----------------------------------------------------------------------------------------------------------------------
-# Title
-st.sidebar.markdown('# **Choose the parameters!**')
+col1, col2, col3 = st.sidebar.columns([1, 15, 1])
+with col2:
+    st.markdown('## Make your choices! ✍️')
+    
+    # Image size
+    img_h_w = st.selectbox('📌 Select the preferred image size:', ('128', '256 (Recommended)', '512')) 
+    if img_h_w == '256 (Recommended)':
+        img_h_w = 256
+    with st.expander('More info'):
+        st.markdown('''The larger the image size, the better the accuracy of the classifier, 
+            for the cost of more training time.''')
 
-# Image size
-img_h_w = st.sidebar.selectbox('📌 Select the preferred image size:', ('128', '256 (Recommended)', '512'))
-if img_h_w == '256 (Recommended)':
-    img_h_w = 256
-with st.sidebar.expander('More info'):
-    st.markdown('''The larger the image size, the better the accuracy of the classifier, 
-        for the cost of more training time.''')
+    # Batch size
+    batch_size = st.selectbox('📌 Select the batch size:', ('8', '16', '32 (Recommended)', '64', '128', '256'))
+    if batch_size == '32 (Recommended)':
+        batch_size = 32
 
-# Batch size
-batch_size = st.sidebar.selectbox('📌 Select the batch size:', ('8', '16', '32 (Recommended)', '64', '128', '256'))
-if batch_size == '32 (Recommended)':
-    batch_size = 32
+    # Train-validation split
+    train_val_split = st.slider('📌 Percentage of data for validation:', 0.2, 1.0)
+    with st.expander('More info'):
+        st.markdown('Recommended: **0.2** or 0.3')
 
-# Train-validation split
-train_val_split = st.sidebar.slider('📌 Percentage of data for validation:', 0.2, 1.0)
-with st.sidebar.expander('More info'):
-    st.markdown('Recommended: **0.2** or 0.3')
+    # Non-trainable layers
+    non_trainable = st.slider('📌 Percentage of non-trainable layers:', 0.1, 1.0)
+    with st.expander('More info'):
+        st.markdown('''Recommended: <= 0.8\\
+            The lower the percentage, the longer the training time.''')
 
-# Non-trainable layers
-non_trainable = st.sidebar.slider('📌 Percentage of non-trainable layers:', 0.1, 1.0)
-with st.sidebar.expander('More info'):
-    st.markdown('''Recommended: <= 0.8\\
-        The lower the percentage, the longer the training time.''')
+    # Number of epochs
+    num_epochs = st.selectbox('📌 Select the number of epochs:', 
+        ('1 (Just to test)', '2', '5', '10', '50', '100', '200', '500 (Recommended)'))
+    if num_epochs == '1 (Just to test)':
+        num_epochs = 1
+    if num_epochs == '500 (Recommended)':
+        num_epochs = 500
+    with st.expander('More info'):
+        st.markdown('''With less than 50 epochs the model will not train enough.'\\
+            It is recommended to set 500 epochs, the model will stop much earlier if it decides it is done''')
 
-# Number of epochs
-num_epochs = st.sidebar.selectbox('📌 Select the number of epochs:', 
-    ('1 (Just to test)', '2', '5', '10', '50', '100', '200', '500 (Recommended)'))
-if num_epochs == '1 (Just to test)':
-    num_epochs = 1
-if num_epochs == '500 (Recommended)':
-    num_epochs = 500
-with st.sidebar.expander('More info'):
-    st.markdown('''With less than 50 epochs the model will not train enough.'\\
-        It is recommended to set 500 epochs, the model will stop much earlier if it decides it is done''')
+    # Initial learning rate
+    initial_learning_rate = st.selectbox('📌 Select the initial learning rate:', 
+        ('1e-4', '1e-3', '1e-2 (Recommended)', '1e-1'))
+    if initial_learning_rate == '1e-2 (Recommended)':
+        initial_learning_rate = 1e-2
 
-# Initial learning rate
-initial_learning_rate = st.sidebar.selectbox('📌 Select the initial learning rate:', 
-    ('1e-4', '1e-3', '1e-2 (Recommended)', '1e-1'))
-if initial_learning_rate == '1e-2 (Recommended)':
-    initial_learning_rate = 1e-2
+    # Choice of the optimizer
+    optimizer_choice = st.selectbox('📌 Select the optimizer:', ('Adam (Recommended)', 'Adadelta'))
+    if optimizer_choice == 'Adam (Recommended)':
+        optimizer_choice = 1
+    if optimizer_choice == 'Adadelta':
+        optimizer_choice = 2
 
-# Choice of the optimizer
-optimizer_choice = st.sidebar.selectbox('📌 Select the optimizer:', ('Adam (Recommended)', 'Adadelta'))
-if optimizer_choice == 'Adam (Recommended)':
-    optimizer_choice = 1
-if optimizer_choice == 'Adadelta':
-    optimizer_choice = 2
+    # Basemodel
+    base_model_choice = st.selectbox(
+        '📌 Select the base model:', ('Xception', 'ResNet50V2', 'InceptionV3', 'DenseNet121'))
+    if base_model_choice == 'Xception':
+        base_model_choice = 1
+    if base_model_choice == 'ResNet50V2':
+        base_model_choice = 2
+    if base_model_choice == 'InceptionV3':
+        base_model_choice = 3
+    if base_model_choice == 'MobileNetV2':
+        base_model_choice = 4
+    if base_model_choice == 'DenseNet121':
+        base_model_choice = 5
 
-# Basemodel
-base_model_choice = st.sidebar.selectbox(
-    '📌 Select the base model:', ('Xception', 'ResNet50V2', 'InceptionV3', 'DenseNet121'))
-if base_model_choice == 'Xception':
-    base_model_choice = 1
-if base_model_choice == 'ResNet50V2':
-    base_model_choice = 2
-if base_model_choice == 'InceptionV3':
-    base_model_choice = 3
-if base_model_choice == 'MobileNetV2':
-    base_model_choice = 4
-if base_model_choice == 'DenseNet121':
-    base_model_choice = 5
-
-# -----------------------------------------------------------------------------------------------------------------------
-# Code
-# -----------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------
+### Code
+###-----------------------------------------------------------------------------------------
 st.markdown("### **The Code** ✨")
 
 code = f'''
@@ -329,10 +337,9 @@ history = model.fit(
 '''
 st.code(code, language='python')
 
-
-# -----------------------------------------------------------------------------------------------------------------------
-# Predict New Image Label
-# -----------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------
+### Predict New Image Label
+###-----------------------------------------------------------------------------------------
 st.markdown("### Prediction on a new set of images")
 st.markdown(''' 
     Now that you have finished training your model you can find out how it performs on new images!
@@ -380,14 +387,3 @@ for i in os.listdir(path_test_images):
 
 '''
 st.code(code, language='python')
-
-
-
-
-
-
-
-
-
-
-
